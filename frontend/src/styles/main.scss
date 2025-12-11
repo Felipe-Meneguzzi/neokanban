@@ -1,0 +1,329 @@
+// Main styles
+:root {
+  --font-display: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  // Custom colors
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-accent: linear-gradient(135deg, #f472b6 0%, #c084fc 100%);
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  --gradient-danger: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+  
+  // Shadows
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-glow: 0 0 40px -10px rgba(99, 102, 241, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 999px;
+  
+  &:hover {
+    background: rgba(99, 102, 241, 0.5);
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+// Utility classes
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: var(--gradient-primary);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+// Kanban specific
+.kanban-board {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  overflow-x: auto;
+  min-height: calc(100vh - 200px);
+}
+
+.kanban-column {
+  flex-shrink: 0;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  padding: 12px;
+  
+  &.dark {
+    background: rgba(18, 18, 26, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  &.light {
+    background: rgba(241, 245, 249, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
+
+.kanban-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.kanban-tasks {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 100px;
+  padding: 4px;
+  
+  &.ghost {
+    opacity: 0.5;
+  }
+  
+  &.drag-over {
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 12px;
+  }
+}
+
+.task-card {
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  cursor: grab;
+  
+  &:active {
+    cursor: grabbing;
+  }
+  
+  &.dragging {
+    opacity: 0.8;
+    transform: rotate(3deg);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Priority indicators
+.priority-indicator {
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+// Label chips
+.label-chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// Deadline styles
+.deadline {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  
+  &.overdue {
+    color: #ef4444;
+  }
+  
+  &.soon {
+    color: #f59e0b;
+  }
+  
+  &.ok {
+    color: #64748b;
+  }
+}
+
+// Avatar group
+.avatar-group {
+  display: flex;
+  
+  .v-avatar {
+    border: 2px solid;
+    margin-left: -8px;
+    
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+// Empty state
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  opacity: 0.6;
+  
+  .v-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+}
+
+// Sidebar
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 280px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  
+  &.dark {
+    background: linear-gradient(180deg, #12121a 0%, #0a0a0f 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  &.light {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
+
+.main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+}
+
+// Responsive
+@media (max-width: 960px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    
+    &.open {
+      transform: translateX(0);
+    }
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .kanban-column {
+    width: 280px;
+  }
+}
+

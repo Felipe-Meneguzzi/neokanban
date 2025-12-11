@@ -1,0 +1,15 @@
+FROM oven/bun:1.1-alpine
+
+WORKDIR /app
+
+# Install dependencies
+COPY package.json bun.lockb* ./
+RUN bun install
+
+# Copy source code
+COPY . .
+
+EXPOSE 3000
+
+CMD ["bun", "run", "src/index.ts"]
+
