@@ -179,7 +179,7 @@
             v-model="projectForm.name"
             label="Nome do Projeto"
             placeholder="Ex: Website Redesign"
-            :rules="[v => !!v || 'Nome é obrigatório']"
+            :rules="[(v: string) => !!v || 'Nome é obrigatório']"
             class="mb-3"
             autofocus
           />
@@ -261,7 +261,7 @@ const projectColors = [
 
 const projects = computed(() => store.projects);
 const users = computed(() => store.users);
-const totalTasks = computed(() => projects.value.reduce((acc, p) => acc + (p.task_count || 0), 0));
+const totalTasks = computed(() => projects.value.reduce((acc, p) => acc + Number(p.task_count || 0), 0));
 const inProgress = computed(() => 2); // TODO: Calculate from actual data
 
 const filteredProjects = computed(() => {

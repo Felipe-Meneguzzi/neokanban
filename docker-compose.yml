@@ -32,11 +32,10 @@ services:
       - "3000:3000"
     volumes:
       - ./backend:/app
-      - /app/node_modules
     depends_on:
       db:
         condition: service_healthy
-    command: bun run --watch src/index.ts
+    command: sh -c "bun install && bun run --watch src/index.ts"
 
   # Frontend (Vue 3 + Vuetify)
   frontend:
@@ -48,10 +47,9 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     depends_on:
       - backend
-    command: bun run dev --host
+    command: sh -c "bun install && bun run dev --host"
 
 volumes:
   postgres_data:
